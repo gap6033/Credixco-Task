@@ -38,9 +38,17 @@ def fetch(url):
             # Moving to next proxy if current proxy doesn't work
             print("Current Proxy Failed....")
             proxy_index += 1
-    if proxy_index == len(proxy_list):
-        print("None of the proxies work")
-        quit()
+        # In case none of the proxies work
+        if proxy_index == len(proxy_list):
+            print("None of the proxies work")
+            user_response = input("Would you like to access site from your own ip address? Y|N: ")
+            if user_response =="Y" or "y":
+                res = requests.get(url)
+                return res
+            else:
+                print("You need working proxy ip address")
+                quit()
+
 
 # accessing website to be parsed
 res = fetch("https://www.midsouthshooterssupply.com/dept/reloading/primers?currentpage=1")
